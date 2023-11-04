@@ -161,12 +161,22 @@
                 {% csrf_token %}
                 <input type="hidden" name="pk" value="{{course.id}}"> 
                 <button type="submit">Add To Cart</button>
-              </form>
+              
+
+              <div class="input-group-prepend">
+                      <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
+                  </div>
+                  <input type="text" name="q" value="1" class="form-control text-center order-number" >
+                  <div class="input-group-prepend">
+                      <button class="btn btn-outline-secondary btn-minus" type="button">_</button>
+                  </div>
+              </div>
               {% comment %} <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{course.id}}"> 
                 <button type="submit">Delete From Cart</button>
               </form> {% endcomment %}
+              </form>
             </div>
 
           </div>

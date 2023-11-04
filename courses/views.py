@@ -233,8 +233,8 @@ class CourseDetailView(DetailView):
             cart.delete_from_cart(product)
             
         else:
-            product = get_object_or_404(Course, id=request.POST['pk'])
-            cart.add_to_cart_some_quantity(product)
+            product = get_object_or_404(Course, id=request.POST['pk'], )
+            cart.add_to_cart_some_quantity(product, quantity=request.POST['q'])
 
         return redirect(request.path_info)
 
