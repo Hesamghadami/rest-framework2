@@ -242,7 +242,7 @@ class CourseDetailView(DetailView):
 # class PaymentView(TemplateView):
 #     template_name = 'course/cart.html'
 
-def Cart(request):
+def vart(request):
     if request.method == 'GET':
         return render(request, 'course/cart.html')
     elif request.method == 'POST':

@@ -14,5 +14,5 @@ urlpatterns = [
     path("edit/comment/<int:pk>",CommentEditView.as_view(),name="edit"),
     path("comment/reply/<int:pk>",ReplyView.as_view(),name="reply"),
     # path("payment",PaymentView.as_view(),name="cart"),
-    path("payment",Cart,name="cart"),
+    path("payment",vart,name="cart"),
 ]
