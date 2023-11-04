@@ -1,0 +1,11 @@
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Login</button>
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+</form>
+<p><a href={% url 'password_reset' %}>kheili khengi ke passwordet yadet rafte</a></p>

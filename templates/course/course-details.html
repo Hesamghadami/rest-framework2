@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}course{% endblock 'title' %}
+{% block 'content' %}
+
+
+  <main pk="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in">
+      <div class="container">
+        <h2>Course Details</h2>
+        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Cource Details Section ======= -->
+    <section pk="course-details" class="course-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-8">
+            <img src={{course.image.url}} class="img-fluid" alt="">
+            <h3>{{course.title}}</h3>
+            <p>
+              {{course.content}}
+            </p><br>
+            <div class="navigation-area">
+              <div class="row">
+                {% if next_course and previous_course %}
+                <div class="col-lg-5 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                  <div class="thumb">
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}><img class="img-fluid" src={{previous_course.image.url}} alt=""></a>
+                  </div>
+                  <div class="arrow">
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}><span class="lnr text-white lnr-arrow-left"></span></a>
+                  </div>
+                  <div class="detials">
+                    <p>Prev Course</p>
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}>
+                      <h4>{{previous_course.title}}</h4>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                  <div class="detials">
+                    <p>Next Post</p>
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}>
+                      <h4>{{next_course.title}}</h4>
+                    </a>
+                  </div>
+                  <div class="arrow">
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}><span class="lnr text-white lnr-arrow-right"></span></a>
+                  </div>
+                  <div class="thumb">
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}><img class="img-fluid" src={{next_course.image.url}} alt=""></a>
+                  </div>
+                </div>
+                {% elif next_course %}
+                <div class="col-lg-5 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                  <div class="detials">
+                    <p>Next Post</p>
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}>
+                      <h4>{{next_course.title}}</h4>
+                    </a>
+                  </div>
+                  <div class="arrow">
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}><span class="lnr text-white lnr-arrow-right"></span></a>
+                  </div>
+                  <div class="thumb">
+                    <a href={% url 'courses:course_detail' pk=next_course.id %}><img class="img-fluid" src={{next_course.image.url}} alt=""></a>
+                  </div>
+                </div>
+                {% elif previous_course %}
+                <div class="col-lg-5 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                  <div class="thumb">
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}><img class="img-fluid" src={{previous_course.image.url}} alt=""></a>
+                  </div>
+                  <div class="arrow">
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}><span class="lnr text-white lnr-arrow-left"></span></a>
+                  </div>
+                  <div class="detials">
+                    <p>Prev Course</p>
+                    <a href={% url 'courses:course_detail' pk=previous_course.id %}> 
+                      <h4>{{previous_course.title}}</h4>
+                    </a>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div><br>
+            <div class="comments-area">
+              <h4>{{comments.count}} Comments</h4>
+              {% for comment in comments %}
+              <div class="comment-list">
+                <div class="single-comment justify-content-between d-flex">
+                  <div class="user justify-content-between d-flex">
+                    <div class="thumb">
+                      <img src="img/blog/c1.jpg" alt="">
+                    </div>
+                    <div class="desc">
+                      <h5><a href="#">{{comment.name}}</a></h5>
+                      <p class="date">{{comment.created_date|date:"d M Y"}}</p>
+                      <p class="comment">
+                        {{comment.message}}
+                      </p>
+                      {% if request.user.is_authenticated and request.user.username == comment.name %}
+                      <a type='button' href={% url 'courses:delete' pk=comment.id %}>Delete</a>
+                      <a type='button' href={% url 'courses:edit' pk=comment.id %}>Edit</a>
+                      {% endif %}
+                    </div> 
+
+                  </div>
+                  <div class="reply-btn">
+                    {% if request.user.is_authenticated %}
+                    <p><a href={% url 'courses:reply' pk=comment.id %} class="btn-reply text-uppercase">reply</a></p>
+                    {% endif %}
+                    {% for rp in reply %}
+                      {% if rp.which_comment.id == comment.id %}
+                          <p>{{rp.name}}:{{rp.message}}</p>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div><br>
+            <div class="comment-form" >
+              <h4 align='center'>Leave a Comment</h4>
+              {% if messages %}
+                {% for message in messages %}
+                  {{message}}
+                {% endfor %}
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-lg-4">
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Trainer</h5>
+              <p><a href="#">{{course.teacher.info.username}}</a></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Course Fee</h5>
+              <p>{{course.price}}$</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Available Seats</h5>
+              <p>{{course.available_seat}}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Schedule</h5>
+              <p>{{course.schedule|date:"D d M Y----H:i A"}}</p>
+            </div>
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="pk" value="{{course.id}}"> 
+                <button type="submit">Add To Cart</button>
+              </form>
+              {% comment %} <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{course.id}}"> 
+                <button type="submit">Delete From Cart</button>
+              </form> {% endcomment %}
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Cource Details Section -->
+
+  </main><!-- End #main -->
+
+ {% endblock 'content' %}

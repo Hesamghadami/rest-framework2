@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}edit{% endblock 'title' %}
+{% block 'content' %}
+<br><br><br><br>
+<form method='post'>
+    {% csrf_token %}
+<div class="form-group form-inline">
+      <div class="form-group col-lg-6 col-md-12 name">
+        <input type='hidden' name='which_course' value={{comment.which_course.id}}>
+        <input type="hidden" class="form-control" name="name" placeholder="Enter Name"
+          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'" value={{comment.name}}>
+      </div>
+      <div class="form-group col-lg-6 col-md-12 email">
+        <input type="hidden" class="form-control" name="email" placeholder="Enter email address"
+          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" value={{comment.email}}>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="subject" placeholder="Subject"
+        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'" value="{{comment.subject}}">
+    </div>
+    <div class="form-group">
+      <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege"
+        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required="">{{comment.message}}</textarea>
+    </div>
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    <button type='submit' class="primary-btn text-uppercase">Post Comment</button>
+  </form>
+<br><br><br><br>
+{% endblock 'content' %}

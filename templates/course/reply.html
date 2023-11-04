@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'title' %}reply{% endblock 'title' %}
+{% block 'content' %}
+<br><br><br><br>
+<form method='post'>
+    {% csrf_token %}
+<div class="form-group form-inline">
+      <div class="form-group col-lg-6 col-md-12 name">
+        <input type='hidden' name='which_comment' value={{comment.id}}>
+        <input type="text" class="form-control" name="name" placeholder="Enter Name"
+          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+      </div>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege"
+        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+             <p>{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    <button type='submit' class="primary-btn text-uppercase">Reply Comment</button>
+  </form>
+<br><br><br><br>
+{% endblock 'content' %}

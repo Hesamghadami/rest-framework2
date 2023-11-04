@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block 'title' %}payment{% endblock 'title' %}
+{% block 'content' %}
+<br><br><br><br><br><br><br><br><br>
+{% for  product in cart %}
+
+    <h5><p>{{product.product_object.title}}</p></h5>
+    <h5><p>{{ product.product_object.price }}</p></h5>
+    <h5><p>{{ product.product_object.all_quantity }}</p></h5>
+    <h5><p><img src={{ product.product_object.image.url }}></p></h5>
+  
+
+{% endfor %}
+<h5><p>--------------------</p></h5>
+<a href="#"> payment and go to paymen site {{ cart.get_total_price_some_quantity }}</a>
+<br>
+<form method="post" action="{% url 'courses:course-detail' %}">
+    {% csrf_token %}
+    <input type="hidden" name="cl" value="{{1}}"> 
+    <button type="submit">Clear Cart</button>
+</form> 
+{% endblock 'content' %}
