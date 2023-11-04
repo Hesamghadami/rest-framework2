@@ -232,19 +232,23 @@ class CourseDetailView(DetailView):
             product = get_object_or_404(Course, id=request.POST['id'])    
             cart.delete_from_cart(product)
             
-        elif 'pk' in request.POST:
-
+        else:
             product = get_object_or_404(Course, id=request.POST['pk'])
             cart.add_to_cart_some_quantity(product)
-
-        else:
-            cart.clear()
 
         return redirect(request.path_info)
 
     
-class PaymentView(TemplateView):
-    template_name = 'course/cart.html'
+# class PaymentView(TemplateView):
+#     template_name = 'course/cart.html'
+
+def Cart(request):
+    if request.method == 'GET':
+        return render(request, 'course/cart.html')
+    elif request.method == 'POST':
+        cart = Cart(request)
+        cart.clear()
+        return render(request, 'course/cart.html')
 
     
 

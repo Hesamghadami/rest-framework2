@@ -14,9 +14,8 @@
 <h5><p>--------------------</p></h5>
 <a href="#"> payment and go to paymen site {{ cart.get_total_price_some_quantity }}</a>
 <br>
-<form method="post" action="{% url 'courses:course-detail' %}">
+<form method="post">
     {% csrf_token %}
-    <input type="hidden" name="cl" value="{{1}}"> 
     <button type="submit">Clear Cart</button>
 </form> 
 {% endblock 'content' %}
